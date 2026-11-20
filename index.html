@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pizzaria do Adri - Louveira SP</title>
+<style>body{margin:0;font-family:Arial,sans-serif;background:#111;color:#fff}*{box-sizing:border-box}
+.top{background:#facc15;color:#111;padding:14px;text-align:center;font-weight:900}.top small{display:block;font-weight:700}
+.btnW{background:#22c55e;color:#000;font-weight:900;padding:12px 18px;border-radius:30px;display:inline-block;text-decoration:none;margin-top:8px}
+header{padding:16px;background:#000;display:flex;justify-content:space-between;align-items:center}header b{font-size:20px}
+.aberto{background:#22c55e;color:#000;padding:6px 12px;border-radius:20px;font-weight:900;font-size:12px}
+.hero{background:#dc2626;padding:22px;border-radius:16px;margin:14px}.hero h1{margin:0;font-size:32px;line-height:1}
+.btn{display:inline-block;padding:12px 16px;border-radius:10px;font-weight:900;border:0;cursor:pointer}.btnY{background:#facc15;color:#111}.btnW2{background:#fff;color:#111}
+.card{background:#1f1f1f;margin:12px;border-radius:14px;padding:14px;display:flex;gap:12px}
+.price{font-size:20px;font-weight:900}.add{background:#dc2626;color:#fff;border:0;padding:10px 14px;border-radius:20px;font-weight:900;cursor:pointer}
+input,select{width:100%;padding:12px;border-radius:10px;border:0;margin:6px 0;background:#fff;color:#111}
+section{padding:0 14px 20px}.tabs{display:flex;gap:8px;margin:10px 0}.tab{flex:1;padding:12px;border-radius:10px;background:#333;color:#fff;border:0;font-weight:800}.tab.on{background:#facc15;color:#111}
+.chat{background:#1f1f1f;border-radius:14px;padding:12px;margin:14px}.msg{background:#333;padding:10px;border-radius:10px;margin:6px 0}.msg.me{background:#dc2626;text-align:right}
+.chip{display:inline-block;background:#fff;color:#111;padding:8px 12px;border-radius:20px;margin:4px;cursor:pointer;font-weight:700}
+.ok{background:#22c55e;color:#000;padding:12px;border-radius:10px;font-weight:900;text-align:center;margin:10px 0;display:none}
+.cart{background:#1f1f1f;margin:14px;padding:14px;border-radius:14px}footer{padding:20px;text-align:center;color:#aaa;font-size:13px}
+.pizza-emoji{font-size:72px;line-height:1}
+</style></head><body>
+<div class="top">QUER UM APP COMO ESSE? FALA COM ADRIANO<small>App proprio para sua pizzaria, sem taxa de iFood</small><br><a class="btnW" href="https://wa.me/5519998932588?text=Oi%20Adriano,%20quero%20um%20app%20como%20esse%20da%20pizzaria!">Falar com Adriano - (19) 99893-2588</a></div>
+<header><div><b>🍕 Pizzaria do Adri</b><br><small>LOUVEIRA - SP - DESDE SEMPRE</small></div><span class="aberto">● Aberto</span></header>
+<div class="hero"><small>🔥 FORNO A LENHA - ENTREGA RAPIDA</small><h1>Pizza de verdade,<br>feita com <span style="color:#facc15">carinho.</span></h1><p>Massa fresca todos os dias, queijo generoso e aquele cheirinho que invade Louveira. Peca, reserve ou agende com a nossa IA.</p><button class="btn btnY" onclick="document.getElementById('cardapio').scrollIntoView()">Ver cardapio</button> <button class="btn btnW2" onclick="abrirIA()">✨ Falar com IA</button><p>⭐ 4.9 - 312 avaliacoes - 35-45 min - Entrega R$ 5,90</p></div>
+<section><h3>🗓️ Agendar com IA</h3>
+<div class="tabs"><button class="tab on" onclick="setTipo('Mesa',this)">Reservar Mesa</button><button class="tab" onclick="setTipo('Entrega',this)">Agendar Entrega</button><button class="tab" onclick="setTipo('Retirada',this)">Retirada</button></div>
+<input id="nome" placeholder="Seu nome"><input id="fone" placeholder="Seu telefone / WhatsApp"><input id="data" type="date" value="2026-11-19"><input id="hora" type="time" value="19:30"><input id="info" placeholder="Qtd pessoas ou endereco">
+<button class="btn btnY" style="width:100%" onclick="salvarAgendamento()">Salvar agendamento</button>
+<div class="ok" id="okMsg">✅ Agendamento salvo com sucesso!</div><div id="lista"></div>
+<p style="font-size:12px;color:#aaa">Salvo no seu celular, funciona mesmo sem internet.</p></section>
+<section id="cardapio"><h2>🍕 Cardapio da Casa - Escolha sua pizza</h2><div id="menu"></div>
+<div style="background:#facc15;color:#111;padding:14px;border-radius:12px;font-weight:900">Cupom ADRI10 = 10% OFF<br><small>Use no carrinho. Valido para pedidos acima de R$ 40.</small></div></section>
+<div class="cart"><h3>🛒 Seu pedido</h3><div id="carrinho">Nenhum item ainda.</div><p>Total: <b id="total">R$ 0,00</b></p><input id="cupom" placeholder="Cupom ADRI10"><button class="btn btnY" onclick="aplicarCupom()">Aplicar cupom</button> <button class="btn" style="background:#22c55e" onclick="pedirWhats()">Pedir no WhatsApp</button></div>
+<div class="chat" id="chatIA" style="display:none"><h3>🤖 IA da Pizzaria do Adri - Online</h3><div id="chatBox"><div class="msg">Oi! Eu sou a IA da Pizzaria do Adri 🍕 Me conta: hoje voce esta com vontade de que? Uma classica, uma bem cremosa ou uma doce?</div></div>
+<div><span class="chip" onclick="responder('Quero uma classica')">Quero uma classica</span><span class="chip" onclick="responder('Bem cremosa')">Bem cremosa</span><span class="chip" onclick="responder('Uma doce')">Uma doce</span></div>
+<div id="passo2" style="display:none"><span class="chip" onclick="responder2('Borda de Catupiry')">Borda de Catupiry</span><span class="chip" onclick="responder2('Borda de Cheddar')">Borda de Cheddar</span><span class="chip" onclick="responder2('Sem borda')">Sem borda</span></div>
+<div id="passo3" style="display:none"><span class="chip" onclick="responder3('Coca-Cola 600ml')">Coca-Cola 600ml</span><span class="chip" onclick="responder3('Guarana 600ml')">Guarana 600ml</span><span class="chip" onclick="responder3('Sem bebida')">Sem bebida</span></div></div>
+<footer>Pizzaria do Adri - Louveira-SP - Adriano da Cruz (19) 99893-2588 - Hoje 18:00 as 23:30</footer>
+<script>
+let tipo='Mesa', cart=[], desconto=0, borda='';
+const pizzas=[['Calabresa','Calabresa artesanal, cebola roxa, queijo mucarela e oregano.',44.90],['Frango com Catupiry','Frango desfiado temperado, catupiry original e milho.',49.90],['Portuguesa','Presunto, ovo, cebola, pimentao, azeitona e mucarela.',52.90],['Marguerita','Molho de tomate fresco, mucarela, manjericao e azeite.',42.90],['Quatro Queijos','Mucarela, gorgonzola, parmesao e catupiry cremoso.',54.90],['Pepperoni Especial','Pepperoni, mucarela e um toque de mel picante.',53.90],['Chocolate com Morango','Chocolate ao leite cremoso, morangos frescos e granulado.',49.90],['Banana com Canela','Banana caramelizada, canela, acucar mascavo e queijo.',39.90],['Coca-Cola 600ml','Gelada, garrafa de vidro retornavel.',8.90],['Guarana Antarctica 600ml','Bem gelado, o classico que combina com tudo.',8.90],['Suco de Laranja 500ml','Natural, feito na hora, sem acucar adicionado.',11.90],['Borda de Catupiry','Borda recheada e cremosa para qualquer pizza salgada.',9.90],['Borda de Cheddar','Cheddar cremoso derretendo na borda.',10.90],['Queijo Extra','Mais mucarela por cima, do jeito que o Adri gosta.',8.90]];
+function renderMenu(){document.getElementById('menu').innerHTML=pizzas.map((p,i)=>'<div class="card"><div class="pizza-emoji">🍕</div><div style="flex:1"><b>'+p[0]+'</b><br><small>'+p[1]+'</small><br><span class="price">R$ '+p[2].toFixed(2).replace('.',',')+'</span></div><button class="add" onclick="add('+i+')">+ Adicionar</button></div>').join('')}
+function add(i){cart.push(pizzas[i]);renderCart()}
+function renderCart(){let t=cart.reduce((s,p)=>s+p[2],0);let tot=t*(1-desconto);document.getElementById('carrinho').innerHTML=cart.length?cart.map(c=>'<div>• '+c[0]+' - R$ '+c[2].toFixed(2).replace('.',',')+'</div>').join(''):'Nenhum item ainda.';document.getElementById('total').innerText='R$ '+tot.toFixed(2).replace('.',',')}
+function aplicarCupom(){if(document.getElementById('cupom').value.trim().toUpperCase()==='ADRI10'){desconto=0.10;alert('Cupom aplicado! 10% OFF');renderCart()}else alert('Cupom invalido. Use ADRI10')}
+function pedirWhats(){let msg='Oi! Quero pedir:%0A'+cart.map(c=>'- '+c[0]+' R$ '+c[2]).join('%0A')+'%0A Total: '+document.getElementById('total').innerText;window.open('https://wa.me/5519998932588?text='+msg,'_blank')}
+function setTipo(t,el){tipo=t;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
+function salvarAgendamento(){let n=document.getElementById('nome').value||'Cliente';let d=document.getElementById('data').value||'2026-11-19';let h=document.getElementById('hora').value||'19:30';let info=document.getElementById('info').value||'';let lista=JSON.parse(localStorage.getItem('pizzaria_agendamentos')||'[]');lista.push({tipo:tipo,nome:n,data:d,hora:h,info:info});localStorage.setItem('pizzaria_agendamentos',JSON.stringify(lista));document.getElementById('okMsg').style.display='block';mostrarLista();setTimeout(()=>{document.getElementById('okMsg').style.display='none'},3000)}
+function mostrarLista(){let lista=JSON.parse(localStorage.getItem('pizzaria_agendamentos')||'[]');document.getElementById('lista').innerHTML=lista.length?'<h4>Seus agendamentos salvos:</h4>'+lista.map(a=>'<div class="msg">✅ '+a.tipo+' - '+a.nome+' - '+a.data+' as '+a.hora+' - '+a.info+'</div>').join(''):''}
+function abrirIA(){document.getElementById('chatIA').style.display='block';document.getElementById('chatIA').scrollIntoView()}
+function responder(txt){document.getElementById('chatBox').innerHTML+='<div class="msg me">'+txt+'</div><div class="msg">Perfeita escolha! Para esse gosto eu recomendo a Calabresa - ela sai quentinha, com borda dourada e muito queijo. As 18:20 costuma ser mais tranquilo, sem fila. Quer reservar para 18:20 ou prefere outro horario?</div>';document.getElementById('passo2').style.display='block'}
+function responder2(txt){borda=txt;document.getElementById('chatBox').innerHTML+='<div class="msg me">'+txt+'</div><div class="msg">Anotado! E para acompanhar, uma bebida bem gelada?</div>';document.getElementById('passo3').style.display='block'}
+function responder3(txt){let d=document.getElementById('data').value||'2026-11-19';let h=document.getElementById('hora').value||'19:30';document.getElementById('chatBox').innerHTML+='<div class="msg me">'+txt+'</div><div class="msg">Prontinho! Resumo: Retirada - '+d+' as '+h+' - Pizza Calabresa - Borda: '+borda+' - Bebida: '+txt+'. Salve abaixo e confirme no WhatsApp!</div><button class="btn btnY" onclick="salvarAgendamento();pedirWhats()">Confirmar e abrir WhatsApp</button>'}
+renderMenu();renderCart();mostrarLista();
+</script></body></html>
